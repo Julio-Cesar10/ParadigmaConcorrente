@@ -9,15 +9,14 @@ public class Banco {
         this.saldo = saldo;
     }
 
-    public synchronized void esperarTurno(int id) {
-        while (turno != id) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+public synchronized void esperarTurno(int id) {
+    while (turno != id) {
+        try {
+            wait();
+        } catch (InterruptedException e) {
         }
     }
+}
 
     public synchronized void passarTurno() {
         turno = (turno == 1) ? 2 : 1;
