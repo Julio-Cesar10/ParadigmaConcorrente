@@ -1,7 +1,6 @@
-package Projeto;
+package br.com.banco.thread;
 
-import java.util.Scanner;
-import java.util.InputMismatchException;
+import br.com.banco.model.Banco;
 
 public class Cliente extends Thread {
 
