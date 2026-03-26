@@ -1,15 +1,27 @@
 # ParadigmaConcorrente
 Simulação de Atendimento em Banco Digital - Paradigma Concorrente
+
+
 Vários clientes realizam operações simultaneamente como transferências, consultas de saldo e pagamentos.
 O objetivo deste trabalho é aplicar conceitos de programação concorrente
 para resolver um problema computacional em que múltiplas tarefas ocorrem
 simultaneamente.
 Cada grupo deverá desenvolver um programa que demonstre execução
 concorrente, utilizando recursos como:
+
+
 ● Threads
+
+
 ● Processos
+
+
 ● Filas de tarefas
+
+
 ● Controle de acesso a recursos compartilhados
+
+
 ● Sincronização entre tarefas
 
 O projeto deve demonstrar como diferentes partes do programa podem
