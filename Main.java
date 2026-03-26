@@ -1,5 +1,7 @@
-package Projeto;
+package br.com.banco.app;
 
+import br.com.banco.model.Banco;
+import br.com.banco.thread.Cliente;
 import java.util.Scanner;
 
 public class Main {
