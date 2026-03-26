@@ -7,11 +7,13 @@ public class Cliente extends Thread {
     private String nome;
     private Banco banco;
     private Scanner sc;
+    private int id;
 
-    public Cliente(String nome, Banco banco, Scanner sc) {
+    public Cliente(String nome, Banco banco, Scanner sc, int id) {
         this.nome = nome;
         this.banco = banco;
         this.sc = sc;
+        this.id = id;
     }
 
     public void run() {
@@ -20,72 +22,64 @@ public class Cliente extends Thread {
 
         do {
 
-            synchronized (sc) {
+            banco.esperarTurno(id);
 
-                boolean entradaValida = false;
+            boolean operacaoValida = false;
 
-                while (!entradaValida) {
+            while (!operacaoValida) {
 
-                    try {
+                try {
 
-                        System.out.println("\n" + nome + " escolha operação:");
-                        System.out.println("1 - Consultar saldo");
-                        System.out.println("2 - Depositar");
-                        System.out.println("3 - Sacar");
-                        System.out.println("4 - Pagar boleto");
-                        System.out.println("0 - Sair do programa");
+                    System.out.println("\n" + nome + " escolha operação:");
+                    System.out.println("1 - Consultar saldo");
+                    System.out.println("2 - Depositar");
+                    System.out.println("3 - Sacar");
+                    System.out.println("4 - Pagar boleto");
+                    System.out.println("0 - Sair");
 
-                        op = sc.nextInt();
-                        entradaValida = true;
+                    op = sc.nextInt();
 
-                        switch (op) {
+                    switch (op) {
 
-                            case 1:
-                                banco.consultarSaldo(nome);
-                                break;
+                        case 1:
+                            banco.consultarSaldo(nome);
+                            operacaoValida = true;
+                            break;
 
-                            case 2:
-                                System.out.println("Digite o valor a ser depositado:");
-                                double deposito = sc.nextDouble();
-                                banco.depositar(nome, deposito);
-                                break;
+                        case 2:
+                            System.out.println("Valor:");
+                            banco.depositar(nome, sc.nextDouble());
+                            operacaoValida = true;
+                            break;
 
-                            case 3:
-                                System.out.println("Digite o valor a ser sacado:");
-                                double saque = sc.nextDouble();
-                                banco.sacar(nome, saque);
-                                break;
+                        case 3:
+                            System.out.println("Valor:");
+                            banco.sacar(nome, sc.nextDouble());
+                            operacaoValida = true;
+                            break;
 
-                            case 4:
-                                System.out.println("Digite o valor do boleto:");
-                                double boleto = sc.nextDouble();
-                                banco.pagarBoleto(nome, boleto);
-                                break;
+                        case 4:
+                            System.out.println("Valor:");
+                            banco.pagarBoleto(nome, sc.nextDouble());
+                            operacaoValida = true;
+                            break;
 
-                            case 0:
-                                System.out.println(nome + " saiu do sistema.");
-                                break;
+                        case 0:
+                            System.out.println(nome + " saiu.");
+                            operacaoValida = true;
+                            break;
 
-                            default:
-                                System.out.println("Operação inválida.");
-                        }
-
-                    } catch (InputMismatchException e) {
-
-                        System.out.println("Entrada inválida! Digite apenas números.");
-                        sc.nextLine();
-
+                        default:
+                            System.out.println("Opção inválida.");
                     }
 
+                } catch (InputMismatchException e) {
+                    System.out.println("Digite apenas números!");
+                    sc.nextLine(); 
                 }
-
             }
 
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println("Erro na thread.");
-            }
+            banco.passarTurno();
 
         } while (op != 0);
     }
