@@ -1,4 +1,4 @@
-package Projeto;
+package br.com.banco.model;
 
 public class Banco {
 		private double saldo;
